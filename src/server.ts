@@ -1,29 +1,25 @@
 import express from 'express'
-import { ApolloServer } from 'apollo-server-express'
-import { createServer } from 'http';
-import cors from 'cors';
-import expressPlayground from 'graphql-playground-middleware-express'
-
+import { createServer } from 'http'
+import cors from 'cors'
+import bodyParser from 'body-parser'
+import path from 'path'
 const app = express()
-
-import resolvers from './resolvers';
-import { schema } from './schema'
-
-const server = new ApolloServer({
-    resolvers,
-    typeDefs: schema,
-})
+import { router } from './router'
 const corsOptions = {
     origin: '*',
     optionsSuccessStatus: 200,
 }
 
 app.use(cors(corsOptions))
+app.use(express.json({ limit: "50mb" }));
 
-server.applyMiddleware({ app })
-
-app.get('playground', expressPlayground({ endpoint: '/graphql' }))
-
+app.use(bodyParser.urlencoded({ extended: true }))
+app.use(bodyParser.json())
+app.use('/img/', express.static(path.join(__dirname, 'img')))
+app.use(express.Router())
+app.use('/', router)
 const httpServer = createServer(app)
 
-httpServer.listen({ port: 8000 }, () => console.log("http://localhost:8000/graphql"))
+httpServer.timeout = 5000
+
+httpServer.listen({ port: 8000 }, () => console.log("http://localhost:8000/"))

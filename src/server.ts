@@ -2,6 +2,7 @@ import express from 'express'
 import { ApolloServer } from 'apollo-server-express'
 import { createServer } from 'http';
 import cors from 'cors';
+import expressPlayground from 'graphql-playground-middleware-express'
 
 const app = express()
 
@@ -12,10 +13,16 @@ const server = new ApolloServer({
     resolvers,
     typeDefs: schema,
 })
+const corsOptions = {
+    origin: '*',
+    optionsSuccessStatus: 200,
+}
 
-app.use("*", cors())
+app.use(cors(corsOptions))
 
-server.applyMiddleware({ app, path: '/graphql' })
+server.applyMiddleware({ app })
+
+app.get('playground', expressPlayground({ endpoint: '/graphql' }))
 
 const httpServer = createServer(app)
 

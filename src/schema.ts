@@ -6,6 +6,6 @@ export const schema = gql`
     }
 
     type Mutation{
-        fildUpload(file: Upload): String
+        fileUpload(file: Upload,name:String): String
     }
 `

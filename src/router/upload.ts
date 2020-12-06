@@ -12,7 +12,7 @@ const upload = async (req: Request, res: Response) => {
         }
     })
 
-    await delay(1000)
+    await delay(2000)
     im.crop({
         srcPath: imagePath,
         dstPath: imagePath,

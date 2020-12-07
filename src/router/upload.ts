@@ -12,19 +12,19 @@ const upload = async (req: Request, res: Response) => {
         }
     })
 
-    await delay(2000)
-    im.crop({
-        srcPath: imagePath,
-        dstPath: imagePath,
-        width: 128,
-        height: 128,
-        quality: 1,
+    // await delay(2000)
+    // im.crop({
+    //     srcPath: imagePath,
+    //     dstPath: imagePath,
+    //     width: 128,
+    //     height: 128,
+    //     quality: 1,
 
-    }, (err) => {
-        if (err) {
-            throw new Error(`error ${err}`)
-        }
-    })
+    // }, (err) => {
+    //     if (err) {
+    //         throw new Error(`error ${err}`)
+    //     }
+    // })
     res.send("success")
 
 }
